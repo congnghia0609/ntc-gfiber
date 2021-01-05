@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"ntc-gfiber/handler"
 	"time"
 
 	"github.com/congnghia0609/ntc-gconf/nconf"
@@ -223,6 +224,18 @@ func StartWebServer(name string) {
 	app.Post("/register/user", AddUser)
 
 	// 3.4. Demo API with MongoDB
+	// Post Handler
+	app.Get("/post/:id", handler.GetPost)
+	app.Get("/posts", handler.GetPosts)
+	app.Post("/post", handler.AddPost)
+	app.Put("/post", handler.UpdatePost)
+	app.Delete("/post/:id", handler.DeletePost)
+	// Tag Handler
+	app.Get("/tag/:id", handler.GetTag)
+	app.Get("/tags", handler.GetTags)
+	app.Post("/tag", handler.AddTag)
+	app.Put("/tag", handler.UpdateTag)
+	app.Delete("/tag/:id", handler.DeleteTag)
 
 	// 4. Static Files Handler
 	// https://docs.gofiber.io/api/app#static
