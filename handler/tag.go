@@ -35,8 +35,6 @@ func AddTag(ctx *fiber.Ctx) error {
 	// Validate params
 	if len(name) == 0 {
 		dataResp := DataResp{Err: -1, Msg: "Parameters invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
@@ -51,14 +49,10 @@ func AddTag(ctx *fiber.Ctx) error {
 	if err1 != nil {
 		fmt.Println("err1:", err1)
 		dataResp := DataResp{Err: -1, Msg: "Add tag fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Add tag successfully", Data: t}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }
 
@@ -83,8 +77,6 @@ func UpdateTag(ctx *fiber.Ctx) error {
 	// Validate params
 	if len(id) == 0 || len(name) == 0 {
 		dataResp := DataResp{Err: -1, Msg: "Parameters invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
@@ -92,8 +84,6 @@ func UpdateTag(ctx *fiber.Ctx) error {
 	t := tag.GetTag(oid)
 	if t == nil {
 		dataResp := DataResp{Err: -1, Msg: "Tag is not exist"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 	nt := tag.Tag{
@@ -106,14 +96,10 @@ func UpdateTag(ctx *fiber.Ctx) error {
 	if err1 != nil || count < 1 {
 		fmt.Println("err1:", err1)
 		dataResp := DataResp{Err: -1, Msg: "Update tag fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Update tag successfully", Data: nt}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }
 
@@ -123,21 +109,15 @@ func GetTag(ctx *fiber.Ctx) error {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		dataResp := DataResp{Err: -1, Msg: "TagId invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 	t := tag.GetTag(oid)
 	if t == nil {
 		dataResp := DataResp{Err: -1, Msg: "Tag is not exist"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Get tag successfully", Data: t}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }
 
@@ -145,8 +125,6 @@ func GetTag(ctx *fiber.Ctx) error {
 func GetAllTags(ctx *fiber.Ctx) error {
 	tags := tag.GetAllTag()
 	dataResp := DataResp{Err: 0, Msg: "Get all tags successfully", Data: tags}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }
 
@@ -172,8 +150,6 @@ func GetTags(ctx *fiber.Ctx) error {
 		mapData["isMore"] = false
 		mapData["tags"] = tags
 		dataResp := DataResp{Err: 0, Msg: "Get all tags successfully", Data: mapData}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
@@ -183,8 +159,6 @@ func GetTags(ctx *fiber.Ctx) error {
 		mapData["isMore"] = false
 		mapData["tags"] = tags
 		dataResp := DataResp{Err: 0, Msg: "Get all tags successfully", Data: mapData}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 	// Get data paging.
@@ -197,8 +171,6 @@ func GetTags(ctx *fiber.Ctx) error {
 	mapData["isMore"] = isMore
 	mapData["tags"] = tags
 	dataResp := DataResp{Err: 0, Msg: "Get all tags successfully", Data: mapData}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }
 
@@ -208,20 +180,14 @@ func DeleteTag(ctx *fiber.Ctx) error {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		dataResp := DataResp{Err: -1, Msg: "TagId invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 	count, err := tag.DeleteTag(oid)
 	if err != nil || count < 1 {
 		dataResp := DataResp{Err: -1, Msg: "Delete tag fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(ctx, string(resp))
 		return ctx.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Delete tag successfully"}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(ctx, string(resp))
 	return ctx.JSON(dataResp)
 }

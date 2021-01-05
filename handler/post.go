@@ -40,8 +40,6 @@ func AddPost(c *fiber.Ctx) error {
 	// Validate params
 	if len(title) == 0 || len(body) == 0 {
 		dataResp := DataResp{Err: -1, Msg: "Parameters invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
@@ -57,14 +55,10 @@ func AddPost(c *fiber.Ctx) error {
 	if err1 != nil {
 		fmt.Println("err1:", err1)
 		dataResp := DataResp{Err: -1, Msg: "Add post fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Add post successfully", Data: p}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
 
@@ -94,8 +88,6 @@ func UpdatePost(c *fiber.Ctx) error {
 	// Validate params
 	if id == 0 || len(title) == 0 || len(body) == 0 {
 		dataResp := DataResp{Err: -1, Msg: "Parameters invalid"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
@@ -103,8 +95,6 @@ func UpdatePost(c *fiber.Ctx) error {
 	p := post.GetPost(id)
 	if p.ID <= 0 {
 		dataResp := DataResp{Err: -1, Msg: "Post is not exist"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 	// id, _ := mdb.Next(post.TablePost)
@@ -119,14 +109,10 @@ func UpdatePost(c *fiber.Ctx) error {
 	if err1 != nil || count < 1 {
 		fmt.Println("err1:", err1)
 		dataResp := DataResp{Err: -1, Msg: "Update post fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Update post successfully", Data: np}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
 
@@ -137,14 +123,10 @@ func GetPost(c *fiber.Ctx) error {
 	p := post.GetPost(id)
 	if p.ID <= 0 {
 		dataResp := DataResp{Err: -1, Msg: "Post is not exist"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Get post successfully", Data: p}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
 
@@ -152,8 +134,6 @@ func GetPost(c *fiber.Ctx) error {
 func GetAllPosts(c *fiber.Ctx) error {
 	posts := post.GetAllPost()
 	dataResp := DataResp{Err: 0, Msg: "Get all posts successfully", Data: posts}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
 
@@ -179,8 +159,6 @@ func GetPosts(c *fiber.Ctx) error {
 		mapData["isMore"] = false
 		mapData["posts"] = posts
 		dataResp := DataResp{Err: 0, Msg: "Get all posts successfully", Data: mapData}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
@@ -190,8 +168,6 @@ func GetPosts(c *fiber.Ctx) error {
 		mapData["isMore"] = false
 		mapData["posts"] = posts
 		dataResp := DataResp{Err: 0, Msg: "Get all posts successfully", Data: mapData}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 	// Get data paging.
@@ -204,8 +180,6 @@ func GetPosts(c *fiber.Ctx) error {
 	mapData["isMore"] = isMore
 	mapData["posts"] = posts
 	dataResp := DataResp{Err: 0, Msg: "Get all posts successfully", Data: mapData}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
 
@@ -216,13 +190,9 @@ func DeletePost(c *fiber.Ctx) error {
 	count, err := post.DeletePost(id)
 	if err != nil || count < 1 {
 		dataResp := DataResp{Err: -1, Msg: "Delete post fail"}
-		// resp, _ := json.Marshal(dataResp)
-		// printJSON(c, string(resp))
 		return c.JSON(dataResp)
 	}
 
 	dataResp := DataResp{Err: 0, Msg: "Delete post successfully"}
-	// resp, _ := json.Marshal(dataResp)
-	// printJSON(c, string(resp))
 	return c.JSON(dataResp)
 }
