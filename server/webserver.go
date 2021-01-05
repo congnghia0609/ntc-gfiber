@@ -139,7 +139,9 @@ func AddUser(c *fiber.Ctx) error {
 }
 
 // StartWebServer start WebServer
+// https://docs.gofiber.io/
 // https://github.com/gofiber/fiber
+// https://github.com/gofiber/recipes
 func StartWebServer(name string) {
 	// Config
 	c := nconf.GetConfig()
@@ -220,6 +222,8 @@ func StartWebServer(name string) {
 	// curl -X POST -H "Content-Type: application/json" --data "{\"name\":\"john\",\"isactive\":true}" http://localhost:8080/register/user
 	app.Post("/register/user", AddUser)
 
+	// 3.4. Demo API with MongoDB
+
 	// 4. Static Files Handler
 	// https://docs.gofiber.io/api/app#static
 	app.Static("/static", "./public")
@@ -230,6 +234,11 @@ func StartWebServer(name string) {
 	// => http://localhost:8080/css/style.css
 	// app.Static("*", "./public/dist/index.html")
 	// => http://localhost:8080/any/path/shows/index/html
+
+	// Custom 404 responses
+	app.Use(func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusNotFound).SendString("Sorry can't find that!")
+	})
 
 	log.Printf("======= WebServer[%s] is running on host: %s", name, address)
 	log.Fatal(app.Listen(address))
