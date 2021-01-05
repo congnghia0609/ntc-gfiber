@@ -9,7 +9,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
+	"ntc-gfiber/server"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -67,16 +67,17 @@ func main() {
 		initLogger()
 	}
 
-	// Enable pprof hooks
-	go func() {
-		if err := http.ListenAndServe("localhost:6060", nil); err != nil {
-			log.Fatalf("pprof failed: %v", err)
-		}
-	}()
+	// // Enable pprof hooks
+	// go func() {
+	// 	// http://localhost:6060/debug/pprof/
+	// 	if err := http.ListenAndServe("localhost:6060", nil); err != nil {
+	// 		log.Fatalf("pprof failed: %v", err)
+	// 	}
+	// }()
 
 	////// -------------------- Start WebServer -------------------- //////
 	// StartWebServer
-	// go server.StartWebServer("webserver")
+	go server.StartWebServer("webserver")
 
 	// Hang thread Main.
 	c := make(chan os.Signal, 1)

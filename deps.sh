@@ -12,6 +12,8 @@ go get -u github.com/gorilla/mux
 go get -u github.com/sirupsen/logrus
 go get -u github.com/natefinch/lumberjack
 go get -u github.com/satori/go.uuid
+go get -u github.com/valyala/fasthttp
+go get -u github.com/valyala/tcplisten
 go get -u github.com/gofiber/fiber/v2
 go get -u go.mongodb.org/mongo-driver
 echo "Install dependencies complete..."
