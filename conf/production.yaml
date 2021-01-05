@@ -1,4 +1,7 @@
 
+system:
+  paging: 2
+
 webserver:
   addr: 0.0.0.0:8080
 
