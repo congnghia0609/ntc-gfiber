@@ -3,7 +3,8 @@ VERSION=0.0.1
 
 .PHONY: deps
 deps:
-	@./deps.sh
+	# @./deps.sh
+	@go mod download
 
 .PHONY: build
 build:
@@ -34,6 +35,7 @@ run-prod:
 clean:
 	@echo "Clean project..."
 	@rm -f $(NAME)
+	@go mod tidy
 
 .PHONY: test
 test:
