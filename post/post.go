@@ -9,8 +9,8 @@ package post
 import (
 	"context"
 	"fmt"
+	"github.com/congnghia0609/ntc-gfiber/mdb"
 	"log"
-	"ntc-gfiber/mdb"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -34,9 +34,7 @@ type Post struct {
 
 // InsertPost Insert Post
 func InsertPost(post Post) error {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	insertResult, err := collection.InsertOne(context.Background(), post)
 	if err != nil {
 		fmt.Println("Error Inserted post with insertResult:", insertResult)
@@ -48,9 +46,7 @@ func InsertPost(post Post) error {
 
 // UpdatePost update Post
 func UpdatePost(post Post) (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{{"_id", post.ID}}
 	opts := options.Replace().SetUpsert(true)
 	updateResult, err := collection.ReplaceOne(context.Background(), filter, post, opts)
@@ -64,9 +60,7 @@ func UpdatePost(post Post) (int64, error) {
 
 // DeletePost delete Post
 func DeletePost(id int64) (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{{"_id", id}}
 	// specify the SetCollation option to provide a collation that will ignore case for string comparisons
 	opts := options.Delete().SetCollation(&options.Collation{
@@ -87,9 +81,7 @@ func DeletePost(id int64) (int64, error) {
 // https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo#pkg-overview
 func GetPost(id int64) Post {
 	var post Post
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{{"_id", id}}
 	err := collection.FindOne(context.Background(), filter).Decode(&post)
 	if err != nil {
@@ -101,9 +93,7 @@ func GetPost(id int64) Post {
 // GetAllPost get all post
 func GetAllPost() []Post {
 	var posts []Post
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{}
 	cur, err := collection.Find(context.Background(), filter)
 	if err != nil {
@@ -129,9 +119,7 @@ func GetAllPost() []Post {
 // GetTotalPost get total post
 // https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo#pkg-examples
 func GetTotalPost() (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{}
 	// specify the MaxTime option to limit the amount of time the operation can run on the server
 	opts := options.Count().SetMaxTime(10 * time.Second)
@@ -142,9 +130,7 @@ func GetTotalPost() (int64, error) {
 // GetSlidePost get slide post
 func GetSlidePost(skip int64, limlit int64) []Post {
 	var posts []Post
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TablePost)
+	collection := mdb.FiberDB.Collection(TablePost)
 	filter := bson.D{}
 	// specify the Sort option to sort the returned documents by _id in Descending order
 	opts := options.Find().SetSkip(skip).SetLimit(limlit).SetSort(bson.D{{"_id", -1}})

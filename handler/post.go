@@ -9,20 +9,20 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/congnghia0609/ntc-gfiber/mdb"
+	"github.com/congnghia0609/ntc-gfiber/post"
 	"log"
-	"ntc-gfiber/mdb"
-	"ntc-gfiber/post"
 	"strconv"
 	"time"
 
 	"github.com/congnghia0609/ntc-gconf/nconf"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 // AddPost api add post
 func AddPost(c *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal(c.Body(), &params)
+	err := json.Unmarshal([]byte(c.Body()), &params)
 	if err != nil {
 		log.Println(err)
 	}
@@ -65,7 +65,7 @@ func AddPost(c *fiber.Ctx) error {
 // UpdatePost api update post
 func UpdatePost(c *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal(c.Body(), &params)
+	err := json.Unmarshal([]byte(c.Body()), &params)
 	if err != nil {
 		log.Println(err)
 	}

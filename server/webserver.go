@@ -9,17 +9,17 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/congnghia0609/ntc-gfiber/handler"
 	"log"
-	"ntc-gfiber/handler"
 	"time"
 
 	"github.com/congnghia0609/ntc-gconf/nconf"
 	"github.com/go-playground/validator"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/fiber/middleware/limiter"
-	"github.com/gofiber/fiber/middleware/pprof"
-	"github.com/gofiber/fiber/middleware/recover"
-	"github.com/gofiber/fiber/middleware/timeout"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
+	"github.com/gofiber/fiber/v2/middleware/pprof"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/timeout"
 	"github.com/gofiber/template/html"
 )
 
@@ -223,7 +223,7 @@ func StartWebServer(name string) {
 	// curl -X POST -H "Content-Type: application/json" --data "{\"name\":\"john\",\"isactive\":true}" http://localhost:8080/register/user
 	app.Post("/register/user", AddUser)
 
-	// 3.4. Demo API with MongoDB
+	// 3.4. Demo API with MongoDB: view in file README.md
 	// Post Handler
 	app.Get("/post/:id", handler.GetPost)
 	app.Get("/posts", handler.GetPosts)

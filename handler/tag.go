@@ -9,20 +9,20 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/congnghia0609/ntc-gfiber/tag"
 	"log"
-	"ntc-gfiber/tag"
 	"strconv"
 	"time"
 
 	"github.com/congnghia0609/ntc-gconf/nconf"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // AddTag api add tag
 func AddTag(ctx *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal(ctx.Body(), &params)
+	err := json.Unmarshal([]byte(ctx.Body()), &params)
 	if err != nil {
 		log.Println(err)
 	}
@@ -59,7 +59,7 @@ func AddTag(ctx *fiber.Ctx) error {
 // UpdateTag api update tag
 func UpdateTag(ctx *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal(ctx.Body(), &params)
+	err := json.Unmarshal([]byte(ctx.Body()), &params)
 	if err != nil {
 		log.Println(err)
 	}

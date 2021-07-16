@@ -8,16 +8,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/congnghia0609/ntc-gconf/nconf"
+	"github.com/congnghia0609/ntc-gfiber/mdb"
+	"github.com/congnghia0609/ntc-gfiber/server"
+	"github.com/natefinch/lumberjack"
 	"log"
-	"ntc-gfiber/server"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"runtime"
 	"syscall"
-
-	"github.com/congnghia0609/ntc-gconf/nconf"
-	"github.com/natefinch/lumberjack"
 )
 
 // initNConf init file config
@@ -74,6 +74,10 @@ func main() {
 	// 		log.Fatalf("pprof failed: %v", err)
 	// 	}
 	// }()
+
+	// Init MongoDB
+	mdb.InitMongo()
+	defer mdb.MClose()
 
 	////// -------------------- Start WebServer -------------------- //////
 	// StartWebServer

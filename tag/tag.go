@@ -9,8 +9,8 @@ package tag
 import (
 	"context"
 	"fmt"
+	"github.com/congnghia0609/ntc-gfiber/mdb"
 	"log"
-	"ntc-gfiber/mdb"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -33,9 +33,7 @@ type Tag struct {
 
 // InsertTag Insert Tag
 func InsertTag(tag Tag) error {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	insertResult, err := collection.InsertOne(context.Background(), tag)
 	if err != nil {
 		fmt.Println("Error Inserted tag with insertResult:", insertResult)
@@ -47,9 +45,7 @@ func InsertTag(tag Tag) error {
 
 // UpdateTag update Tag
 func UpdateTag(tag Tag) (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{{"_id", tag.ID}}
 	opts := options.Replace().SetUpsert(true)
 	updateResult, err := collection.ReplaceOne(context.Background(), filter, tag, opts)
@@ -63,9 +59,7 @@ func UpdateTag(tag Tag) (int64, error) {
 
 // DeleteTag delete Tag
 func DeleteTag(id primitive.ObjectID) (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{{"_id", id}}
 	// specify the SetCollation option to provide a collation that will ignore case for string comparisons
 	opts := options.Delete().SetCollation(&options.Collation{
@@ -86,9 +80,7 @@ func DeleteTag(id primitive.ObjectID) (int64, error) {
 // https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo#pkg-overview
 func GetTag(id primitive.ObjectID) *Tag {
 	var tag Tag
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{{"_id", id}}
 	err := collection.FindOne(context.Background(), filter).Decode(&tag)
 	if err != nil {
@@ -101,9 +93,7 @@ func GetTag(id primitive.ObjectID) *Tag {
 // GetAllTag get all tag
 func GetAllTag() []Tag {
 	var tags []Tag
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{}
 	cur, err := collection.Find(context.Background(), filter)
 	if err != nil {
@@ -129,9 +119,7 @@ func GetAllTag() []Tag {
 // GetTotalTag get total tag
 // https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo#pkg-examples
 func GetTotalTag() (int64, error) {
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{}
 	// specify the MaxTime option to limit the amount of time the operation can run on the server
 	opts := options.Count().SetMaxTime(10 * time.Second)
@@ -142,9 +130,7 @@ func GetTotalTag() (int64, error) {
 // GetSlideTag get slide tag
 func GetSlideTag(skip int64, limlit int64) []Tag {
 	var tags []Tag
-	client := mdb.GetClient()
-	defer mdb.Close(client)
-	collection := client.Database(mdb.DbName).Collection(TableTag)
+	collection := mdb.FiberDB.Collection(TableTag)
 	filter := bson.D{}
 	// specify the Sort option to sort the returned documents by _id in Descending order
 	opts := options.Find().SetSkip(skip).SetLimit(limlit).SetSort(bson.D{{"_id", -1}})
