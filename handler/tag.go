@@ -22,7 +22,7 @@ import (
 // AddTag api add tag
 func AddTag(ctx *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal([]byte(ctx.Body()), &params)
+	err := json.Unmarshal(ctx.Body(), &params)
 	if err != nil {
 		log.Println(err)
 	}
@@ -59,7 +59,7 @@ func AddTag(ctx *fiber.Ctx) error {
 // UpdateTag api update tag
 func UpdateTag(ctx *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal([]byte(ctx.Body()), &params)
+	err := json.Unmarshal(ctx.Body(), &params)
 	if err != nil {
 		log.Println(err)
 	}

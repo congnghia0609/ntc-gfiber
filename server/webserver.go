@@ -206,6 +206,10 @@ func StartWebServer(name string) {
 
 	// 3.1. Group routes
 	// https://docs.gofiber.io/guide/grouping
+	// http://localhost:8080/api/v1/list/nghia
+	// http://localhost:8080/api/v1/user/nghia
+	// http://localhost:8080/api/v2/list/nghia
+	// http://localhost:8080/api/v2/user/nghia
 	api := app.Group("/api", Auth) // /api
 	v1 := api.Group("/v1")         // /api/v1
 	v1.Get("/list/:name", Hello)   // /api/v1/list/nghia
@@ -213,6 +217,9 @@ func StartWebServer(name string) {
 	v2 := api.Group("/v2")         // /api/v2
 	v2.Get("/list/:name", Hello)   // /api/v2/list/nghia
 	v2.Get("/user/:name", Hello)   // /api/v2/user/nghia
+
+	// http://localhost:8080/auth/nghia
+	app.Get("/auth/:name", Auth, Hello)
 
 	// 3.2. Template engines: https://github.com/gofiber/template
 	// http://localhost:8080/home

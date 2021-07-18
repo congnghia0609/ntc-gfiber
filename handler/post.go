@@ -22,7 +22,7 @@ import (
 // AddPost api add post
 func AddPost(c *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal([]byte(c.Body()), &params)
+	err := json.Unmarshal(c.Body(), &params)
 	if err != nil {
 		log.Println(err)
 	}
@@ -65,7 +65,7 @@ func AddPost(c *fiber.Ctx) error {
 // UpdatePost api update post
 func UpdatePost(c *fiber.Ctx) error {
 	params := make(map[string]interface{})
-	err := json.Unmarshal([]byte(c.Body()), &params)
+	err := json.Unmarshal(c.Body(), &params)
 	if err != nil {
 		log.Println(err)
 	}
