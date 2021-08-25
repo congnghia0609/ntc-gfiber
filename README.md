@@ -1,10 +1,13 @@
 # ntc-gfiber
-ntc-gfiber is an example golang http server using Fiber
+ntc-gfiber is an example golang http server using Fiber  
 
 ## Quick start
+- Install and start [MongoDB](https://docs.mongodb.com/manual/installation/)  
 ```bash
 # install library dependencies
-make deps
+#make deps
+export GO111MODULE=on
+go mod tidy
 
 # build
 make build
